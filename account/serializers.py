@@ -7,7 +7,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'confirm_password']
+        fields = ['username', 'email', 'password', 'confirm_password', 'is_vendor']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -21,4 +21,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'password': 'Password must match.'})
         account.set_password(password)
         account.save()
+        
+        if self.validated_data['is_vendor'] == True:
+            account.is_vendor = True
+            account.save()
+            vendor = Vendor(user=account)
+            vendor.save()
+        
         return account
