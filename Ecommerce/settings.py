@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
+    'chat.apps.ChatConfig',
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
     'django.contrib.admin',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +149,15 @@ AUTH_USER_MODEL = 'account.CustomUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+ASGI_APPLICATION = 'Ecommerce.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+        #'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        #'CONFIG': {
+        #    "hosts": [('127.0.0.1', 6379)],
+        #},
+    }
+}
