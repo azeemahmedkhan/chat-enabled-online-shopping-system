@@ -6,8 +6,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 
-@api_view(['POST',])
+@api_view(['GET', 'POST',])
 def create_room(request):
+    if request.method == 'GET':
+        rooms = Room.objects.all()
+        serializer = RoomSerializer(rooms, many=True)
+        return Response(serializer.data)
     if request.method == 'POST':
         serializer = RoomSerializer(data=request.data)
         data = {}

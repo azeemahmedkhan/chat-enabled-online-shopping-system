@@ -5,8 +5,8 @@ def get_group_name(user1, user2):
     return 'chat_{}_{}'.format(*sorted([user1, user2]))
 
 class RoomSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(write_only=True)
-    vendor = serializers.CharField(write_only=True)
+    user = serializers.CharField()
+    vendor = serializers.CharField()
     class Meta:
         model = Room
         fields = ['room_name', 'user', 'vendor', ]
